@@ -7,72 +7,86 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.example.recycleviewtesting.DetailActivity;
-import com.example.recycleviewtesting.Item.MyItem;
-import com.example.recycleviewtesting.R;
-
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.recycleviewtesting.DetailActivity;
+import com.example.recycleviewtesting.Product;
+import com.example.recycleviewtesting.R;
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
-    private List<MyItem> itemList;
+    private List<Product> productList;
     private Context context;
 
-    public MyAdapter(List<MyItem> itemList) {
-        this.itemList = itemList;
+    public MyAdapter(List<Product> productList, Context context) {
+        this.productList = productList;
+        this.context = context;
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView itemImage;
-        TextView titleText, priceText;
+    @Override
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(context).inflate(R.layout.item_layout, parent, false);
+        return new MyViewHolder(itemView);
+    }
 
-        public MyViewHolder(View itemView) {
-            super(itemView);
-            itemImage = itemView.findViewById(R.id.itemImage);
-            titleText = itemView.findViewById(R.id.titleText);
-            priceText = itemView.findViewById(R.id.priceText);
+    @Override
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+        Product currentProduct = productList.get(position);
+
+        // Set product name
+        holder.titleText.setText(currentProduct.getName());
+
+        // Set price
+        if (currentProduct.getPrice() != null) {
+            holder.priceText.setText("₱" + currentProduct.getPrice());
+        } else {
+            holder.priceText.setText("Price Unavailable");
         }
-    }
 
-    @NonNull
-    @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        context = parent.getContext(); // Store context for later use
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
-        return new MyViewHolder(v);
-    }
+        // Set description
+        if (currentProduct.getDescription() != null && !currentProduct.getDescription().isEmpty()) {
+            holder.productDescription.setText(currentProduct.getDescription());
+        } else {
+            holder.productDescription.setText("No description available.");
+        }
 
-    @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        MyItem item = itemList.get(position);
-        holder.itemImage.setImageResource(item.getImageResId());
-        holder.titleText.setText(item.getTitle());
-        holder.priceText.setText(item.getPrice());
+        // Load image
+        Glide.with(context)
+                .load(currentProduct.getImageUrl())
+                .apply(new RequestOptions()
+                        .placeholder(R.drawable.casualshoes2)
+                        .error(R.drawable.ic_menu_remove))
+                .into(holder.itemImage);
 
-        // Add click listener to the item view
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Create an Intent to open DetailActivity
-                Intent intent = new Intent(context, DetailActivity.class);
-
-                // Pass data to DetailActivity
-                intent.putExtra("PRODUCT_TITLE", item.getTitle());
-                intent.putExtra("PRODUCT_PRICE", item.getPrice());
-                intent.putExtra("PRODUCT_IMAGE", item.getImageResId());
-
-                // Start the DetailActivity
-                context.startActivity(intent);
-            }
+        // Set click listener to go to DetailActivity
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, DetailActivity.class);
+            intent.putExtra("productId", currentProduct.getId() != null ? currentProduct.getId() : "");
+            intent.putExtra("name", currentProduct.getName());
+            intent.putExtra("price", currentProduct.getPrice());
+            intent.putExtra("description", currentProduct.getDescription());
+            intent.putExtra("imageUrl", currentProduct.getImageUrl());
+            context.startActivity(intent);
         });
     }
 
     @Override
     public int getItemCount() {
-        return itemList.size();
+        return productList.size();
+    }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        public TextView titleText, priceText, productDescription;
+        public ImageView itemImage;
+
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            titleText = itemView.findViewById(R.id.titleText);
+            priceText = itemView.findViewById(R.id.priceText);
+            productDescription = itemView.findViewById(R.id.productDescription);
+            itemImage = itemView.findViewById(R.id.itemImage);
+        }
     }
 }

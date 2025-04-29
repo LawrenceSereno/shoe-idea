@@ -1,9 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.RecycleViewTEsting" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-    </style>
+    <style name="Base.Theme.Dark" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">#000000</item> <!-- Black -->
+        <item name="colorPrimary">@android:color/black</item> <!-- Black -->
+        <item name="colorOnPrimary">@android:color/white</item> <!-- White Text -->
 
+        <item name="colorSecondary">@android:color/black</item> <!-- Black -->
+        <item name="colorOnSecondary">@android:color/white</item> <!-- White Text -->
+
+        <item name="android:colorBackground">@android:color/black</item> <!-- Black -->
+        <item name="android:textColorPrimary">@android:color/white</item> <!-- White Text -->
+    </style>
     <style name="Theme.RecycleViewTEsting" parent="Base.Theme.RecycleViewTEsting" />
 </resources>

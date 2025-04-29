@@ -1,33 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:layout_margin="8dp"
-    android:padding="8dp">
+    app:cardCornerRadius="16dp"
+    app:cardElevation="6dp"
+    android:background="@color/white"
+    app:cardUseCompatPadding="true">
 
-    <ImageView
-        android:id="@+id/itemImage"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/casualshoes5" />
-
-    <TextView
-        android:id="@+id/titleText"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Shoe Name"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:paddingTop="8dp"/>
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:background="@android:color/white">
 
-    <TextView
-        android:id="@+id/priceText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="₱5,000"
-        android:textColor="#FF5722"
-        android:textSize="14sp"
-        android:paddingTop="4dp"/>
-</LinearLayout>
+        <ImageView
+            android:id="@+id/itemImage"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_gravity="center"
+            android:rotation="-30"
+            android:scaleType="centerInside"
+            android:transitionName="shoeImageTransition" />
+
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Air Max 97"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:paddingTop="12dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="6dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/priceText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="₱5,000"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/arrowIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_arrow_right"
+                android:layout_gravity="end"/>
+        </LinearLayout>
+
+        <!-- Add the Description TextView below the price section -->
+        <TextView
+            android:id="@+id/productDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:text="This is the product description."
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
