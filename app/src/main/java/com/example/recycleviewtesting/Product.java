@@ -3,7 +3,7 @@ package com.example.recycleviewtesting;
 public class Product {
     private String id;
     private String name;
-    private Long price; // Storing price as Long
+    private Double price; // Storing price as Long
     private String description;
     private String imageUrl;
 
@@ -13,7 +13,7 @@ public class Product {
     }
 
     // ✅ Main constructor with correct parameter types
-    public Product(String name, Long price, String description, String imageUrl) {
+    public Product(String name, Double price, String description, String imageUrl) {
         this.name = name;
         this.price = price;
         this.description = description;
@@ -37,11 +37,11 @@ public class Product {
         this.name = name;
     }
 
-    public Long getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

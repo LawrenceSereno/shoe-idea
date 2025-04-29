@@ -34,7 +34,7 @@ public class Cart_Activity extends AppCompatActivity implements CartAdapter.OnCa
     private TextView subtotalTextView, deliveryFeeTextView, discountTextView, totalTextView;
 
     private CartAdapter cartAdapter;
-    private List<CartItem> CartItems;
+    private List<CartItem> cartItems;
 
     // Firebase
     private FirebaseAuth mAuth;
@@ -63,7 +63,7 @@ public class Cart_Activity extends AppCompatActivity implements CartAdapter.OnCa
 
         checkoutButton.setOnClickListener(v -> {
             // Handle checkout process
-            if (CartItems.isEmpty()) {
+            if (cartItems.isEmpty()) {
                 Toast.makeText(this, "Your cart is empty", Toast.LENGTH_SHORT).show();
             } else {
                 // Implement checkout process here
@@ -85,8 +85,8 @@ public class Cart_Activity extends AppCompatActivity implements CartAdapter.OnCa
 
         // Set up RecyclerView
         cartRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        CartItems = new ArrayList<>();
-        cartAdapter = new CartAdapter(this, CartItems, this);
+        cartItems = new ArrayList<>();
+        cartAdapter = new CartAdapter(this, cartItems, this);
         cartRecyclerView.setAdapter(cartAdapter);
     }
 
@@ -100,13 +100,13 @@ public class Cart_Activity extends AppCompatActivity implements CartAdapter.OnCa
         cartListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                CartItems.clear();
+                cartItems.clear();
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     CartItem item = snapshot.getValue(CartItem.class);
                     if (item != null) {
                         item.setId(snapshot.getKey());
-                        CartItems.add(item);
+                        cartItems.add(item);
                     }
                 }
 
@@ -126,7 +126,7 @@ public class Cart_Activity extends AppCompatActivity implements CartAdapter.OnCa
     }
 
     private void updateUI() {
-        if (CartItems.isEmpty()) {
+        if (cartItems.isEmpty()) {
             cartRecyclerView.setVisibility(View.GONE);
             emptyCartView.setVisibility(View.VISIBLE);
         } else {
@@ -137,7 +137,7 @@ public class Cart_Activity extends AppCompatActivity implements CartAdapter.OnCa
 
     private void calculateTotals() {
         double subtotal = 0;
-        for (CartItem item : CartItems) {
+        for (CartItem item : cartItems) {
             subtotal += item.getTotalPrice();
         }
 

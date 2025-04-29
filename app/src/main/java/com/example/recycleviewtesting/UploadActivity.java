@@ -38,22 +38,22 @@ public class UploadActivity extends AppCompatActivity {
         uploadBtn.setOnClickListener(v -> {
             // Get user input
             String name = nameInput.getText().toString().trim();
-            String priceString = priceInput.getText().toString().trim();
+            String priceStr = priceInput.getText().toString().trim(); // Read as String
             String imageUrl = imageUrlInput.getText().toString().trim();
             String description = descriptionInput.getText().toString().trim(); // Get description input
 
             // Validate input
-            if (name.isEmpty() || priceString.isEmpty() || imageUrl.isEmpty() || description.isEmpty()) {
+            if (name.isEmpty() || priceStr.isEmpty() || imageUrl.isEmpty() || description.isEmpty()) {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            // Convert price to Long
-            Long price;
+            // Convert price from String to Long
+           Double price;
             try {
-                price = Long.parseLong(priceString);  // Parse price to Long
+                price = Double.parseDouble(priceStr);
             } catch (NumberFormatException e) {
-                Toast.makeText(this, "Invalid price format", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Price must be a valid number", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -61,7 +61,7 @@ public class UploadActivity extends AppCompatActivity {
             String id = databaseReference.push().getKey();
 
             // Create a Product object with the entered data
-            Product product = new Product(name, price, description, imageUrl); // Use Product class here
+            Product product = new Product(name, price, description, imageUrl); // Now uses Long price
 
             // Save the product to Firebase
             if (id != null) {

@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                     String imageUrl = itemSnapshot.child("imageUrl").getValue(String.class);
 
                     // Retrieve the price as Long
-                    Long price = itemSnapshot.child("price").getValue(Long.class);  // Ensure the price is Long
+                    Double price = itemSnapshot.child("price").getValue(Double.class);  // Ensure the price is Long
 
                     // Log to check if data is being retrieved correctly
                     Log.d("MainActivity", "Product name: " + name + ", Price: " + price);
