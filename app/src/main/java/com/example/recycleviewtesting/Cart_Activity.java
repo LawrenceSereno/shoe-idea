@@ -1,5 +1,6 @@
 package com.example.recycleviewtesting;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -66,6 +67,8 @@ public class Cart_Activity extends AppCompatActivity implements CartAdapter.OnCa
             if (cartItems.isEmpty()) {
                 Toast.makeText(this, "Your cart is empty", Toast.LENGTH_SHORT).show();
             } else {
+                Intent intent = new Intent(Cart_Activity.this, AddAddressActivity.class);
+                startActivity(intent);  // Start the AddAddressActivity
                 // Implement checkout process here
                 Toast.makeText(this, "Proceeding to checkout...", Toast.LENGTH_SHORT).show();
                 // You can start a new activity for checkout process

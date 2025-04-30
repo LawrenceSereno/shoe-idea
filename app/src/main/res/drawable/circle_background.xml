@@ -1,0 +1,5 @@
+<!-- res/drawable/circular_shape.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@android:color/white" /> <!-- White background for the circle -->
+    <corners android:radius="50dp" /> <!-- Set the radius to 50dp (fixed size) -->
+</shape>

@@ -89,9 +89,9 @@ public class DetailActivity extends AppCompatActivity {
             btn.setOnClickListener(v -> {
                 for (Button b : sizeButtons) {
                     b.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#E0E0E0")));
-                    b.setTextColor(Color.BLACK);
+//                    btn.setBackgroundTintList(ColorStateList.valueOf(Color.TRANSPARENT));
                 }
-                btn.setBackgroundTintList(ColorStateList.valueOf(Color.BLACK));
+                btn.setBackgroundTintList(ColorStateList.valueOf(Color.TRANSPARENT));
                 btn.setTextColor(Color.WHITE);
                 selectedButton = btn;
                 selectedSize = btn.getText().toString();
@@ -100,11 +100,14 @@ public class DetailActivity extends AppCompatActivity {
 
         // Default selection
         if (sizeButtons.length > 0 && selectedSize.isEmpty()) {
-            selectedButton = sizeButtons[0];
-            selectedButton.setBackgroundTintList(ColorStateList.valueOf(Color.BLACK));
-            selectedButton.setTextColor(Color.WHITE);
+            for (Button btn : sizeButtons) {
+                btn.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
+                btn.setTextColor(Color.WHITE);
+            }
+            selectedButton = sizeButtons[0]; // Optional: still set a default selected one
             selectedSize = selectedButton.getText().toString();
         }
+
 
         addToCartBtn.setOnClickListener(v -> {
             if (selectedSize.isEmpty()) {

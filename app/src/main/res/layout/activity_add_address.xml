@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#FFFFFF">
+
+    <!-- Name Input Field -->
+    <TextView
+        android:id="@+id/name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:textSize="16sp"
+        android:textColor="#000000"
+    android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/name_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Enter your name"
+        android:inputType="textPersonName"
+        android:padding="12dp"
+        android:textColor="#000000"
+        android:textColorHint="@color/black"
+        android:textSize="16sp" />
+
+    <!-- Phone Input Field -->
+    <TextView
+        android:id="@+id/phone_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phone"
+        android:textSize="16sp"
+        android:textColor="#000000"
+    android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/phone_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter phone number"
+        android:inputType="phone"
+        android:textColor="#000000"
+        android:textColorHint="@color/black"
+    android:padding="12dp"
+    android:textSize="16sp"
+    android:layout_marginBottom="16dp"/>
+
+    <!-- Region Input Field -->
+    <TextView
+        android:id="@+id/region_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Region"
+        android:textSize="16sp"
+        android:textColor="#000000"
+    android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/region_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter region"
+        android:inputType="text"
+        android:textColor="#000000"
+        android:textColorHint="@color/black"
+    android:padding="12dp"
+    android:textSize="16sp"
+    android:layout_marginBottom="16dp"/>
+
+    <!-- Street Input Field -->
+    <TextView
+        android:id="@+id/street_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Street"
+        android:textSize="16sp"
+        android:textColor="#000000"
+    android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/street_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter street"
+        android:inputType="text"
+        android:textColor="#000000"
+        android:textColorHint="@color/black"
+    android:padding="12dp"
+    android:textSize="16sp"
+    android:layout_marginBottom="16dp"/>
+
+    <!-- Unit Input Field -->
+    <TextView
+        android:id="@+id/unit_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Unit"
+        android:textSize="16sp"
+        android:textColor="#000000"
+    android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/unit_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter unit (optional)"
+        android:inputType="text"
+        android:textColor="#000000"
+        android:textColorHint="@color/black"
+    android:padding="12dp"
+    android:textSize="16sp"
+    android:layout_marginBottom="16dp"/>
+
+    <!-- Save Button -->
+    <Button
+        android:id="@+id/save_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:padding="12dp"
+        android:text="Save Address"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+</LinearLayout>
