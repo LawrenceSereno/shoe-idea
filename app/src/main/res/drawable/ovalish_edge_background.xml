@@ -5,6 +5,7 @@
 
     <!-- Rounded edges: only left & right rounded -->
     <corners
+
         android:topLeftRadius="40dp"
         android:topRightRadius="40dp" />
 </shape>

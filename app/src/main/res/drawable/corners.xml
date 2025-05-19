@@ -1,4 +1,10 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="oval">
-    <solid android:color="@android:color/white" />
+    android:shape="rectangle">
+
+    <solid android:color="#A9A9A9" /> <!-- Background color -->
+
+    <!-- Rounded edges: only left & right rounded -->
+    <corners
+
+       android:radius="30dp"/>
 </shape>

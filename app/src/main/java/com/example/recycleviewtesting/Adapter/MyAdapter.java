@@ -7,12 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.recycleviewtesting.DetailActivity;
 import com.example.recycleviewtesting.Product;
 import com.example.recycleviewtesting.R;
+
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
@@ -25,49 +28,43 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         this.context = context;
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.item_layout, parent, false);
-        return new MyViewHolder(itemView);
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_layout, parent, false);
+        return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        Product currentProduct = productList.get(position);
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        Product product = productList.get(position);
 
-        // Set product name
-        holder.titleText.setText(currentProduct.getName());
+        holder.titleText.setText(product.getName());
 
-        // Set price
-        if (currentProduct.getPrice() != null) {
-            holder.priceText.setText("₱" + currentProduct.getPrice());
+        // Format price with comma for thousands and peso sign
+        if (product.getPrice() != null) {
+            String priceFormatted = String.format("₱%,.0f", product.getPrice());  // No decimals, comma thousands
+            holder.priceText.setText(priceFormatted);
         } else {
-            holder.priceText.setText("Price Unavailable");
+            holder.priceText.setText("Price N/A");
         }
 
-        // Set description
-        if (currentProduct.getDescription() != null && !currentProduct.getDescription().isEmpty()) {
-            holder.productDescription.setText(currentProduct.getDescription());
-        } else {
-            holder.productDescription.setText("No description available.");
-        }
+        holder.descriptionText.setText(product.getDescription() != null ? product.getDescription() : "No description");
 
-        // Load image
+        // Load image with Glide into the rotated ImageView
         Glide.with(context)
-                .load(currentProduct.getImageUrl())
-                .apply(new RequestOptions()
-                        .placeholder(R.drawable.casualshoes2)
-                        .error(R.drawable.ic_menu_remove))
+                .load(product.getImageUrl())
+                .placeholder(R.drawable.check)  // Your placeholder image drawable
+                .error(R.drawable.close)        // Your error image drawable
                 .into(holder.itemImage);
 
-        // Set click listener to go to DetailActivity
+        // Click on whole item to open DetailActivity with extras
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, DetailActivity.class);
-            intent.putExtra("productId", currentProduct.getId() != null ? currentProduct.getId() : "");
-            intent.putExtra("name", currentProduct.getName());
-            intent.putExtra("price", currentProduct.getPrice());
-            intent.putExtra("description", currentProduct.getDescription());
-            intent.putExtra("imageUrl", currentProduct.getImageUrl());
+            intent.putExtra("name", product.getName());
+            intent.putExtra("price", product.getPrice());
+            intent.putExtra("description", product.getDescription());
+            intent.putExtra("imageUrl", product.getImageUrl());
             context.startActivity(intent);
         });
     }
@@ -77,16 +74,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         return productList.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView titleText, priceText, productDescription;
-        public ImageView itemImage;
+    static class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView titleText, priceText, descriptionText;
+        ImageView itemImage, arrowIcon;
 
-        public MyViewHolder(View itemView) {
+        MyViewHolder(@NonNull View itemView) {
             super(itemView);
             titleText = itemView.findViewById(R.id.titleText);
             priceText = itemView.findViewById(R.id.priceText);
-            productDescription = itemView.findViewById(R.id.productDescription);
+            descriptionText = itemView.findViewById(R.id.productDescription);
             itemImage = itemView.findViewById(R.id.itemImage);
+            arrowIcon = itemView.findViewById(R.id.arrowIcon);  // You may not need to do anything with it
         }
     }
 }

@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.recycleviewtesting.databinding.ActivityForgotPasswordBinding
 import com.google.firebase.auth.FirebaseAuth
 
-class ForgotPasswordActivity : AppCompatActivity() {
+class   ForgotPasswordActivity : AppCompatActivity() {
 
     // Declare binding variable
     private lateinit var binding: ActivityForgotPasswordBinding

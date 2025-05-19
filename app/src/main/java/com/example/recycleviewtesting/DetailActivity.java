@@ -33,6 +33,7 @@ public class DetailActivity extends AppCompatActivity {
     private double price;
     private String description;
     private String selectedSize = "";
+    private String sellerId;  // Add this for the seller's ID
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class DetailActivity extends AppCompatActivity {
         name = getIntent().getStringExtra("name");
         price = getIntent().getDoubleExtra("price", 0.0);
         description = getIntent().getStringExtra("description");
+        sellerId = getIntent().getStringExtra("sellerId");  // Get the seller's ID from the Intent
 
         // Safe fallback
         if (imageUrl == null || name == null || description == null) {

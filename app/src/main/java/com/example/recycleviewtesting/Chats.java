@@ -9,7 +9,6 @@ import com.example.recycleviewtesting.Adapter.ChatAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.*;
 import java.util.ArrayList;
-// Chats.java
 
 public class Chats extends AppCompatActivity {
 
@@ -30,7 +29,7 @@ public class Chats extends AppCompatActivity {
         chatListView = findViewById(R.id.chat_list_view);
         chatTitle = findViewById(R.id.chat_title);
 
-        // Get the sellerId passed from OrderConfirmationActivity
+        // Get the sellerId passed from the previous activity (OrderConfirmationActivity)
         sellerId = getIntent().getStringExtra("sellerId");
 
         // Get the buyerId (current user's ID)
@@ -71,7 +70,7 @@ public class Chats extends AppCompatActivity {
                     messages.add(msg);
                 }
                 chatAdapter.notifyDataSetChanged();
-                chatListView.setSelection(chatAdapter.getCount() - 1);
+                chatListView.setSelection(chatAdapter.getCount() - 1);  // Scroll to the last message
             }
 
             @Override
