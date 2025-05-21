@@ -16,6 +16,8 @@ kotlin = "1.8.21"
 firebaseStorage = "21.0.1"
 firebaseAuthKtx = "23.2.0"
 firebaseFirestoreKtx = "25.1.4"
+playServicesLocation = "21.3.0"
+firebaseCrashlyticsBuildtools = "3.0.3"
 
 [libraries]
 activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
@@ -33,9 +35,10 @@ firebase-database = { group = "com.google.firebase", name = "firebase-database",
 firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
 firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
+play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
+firebase-crashlytics-buildtools = { group = "com.google.firebase", name = "firebase-crashlytics-buildtools", version.ref = "firebaseCrashlyticsBuildtools" }
 
 [plugins]
-android-application = { id = "com.android.application", version.ref = "agp" }
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 

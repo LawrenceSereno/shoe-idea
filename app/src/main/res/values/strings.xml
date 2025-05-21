@@ -1,3 +1,19 @@
 <resources>
-    <string name="app_name">RecycleViewTEsting</string>
+        <string name="app_name">RecycleViewTEsting</string>
+        <string name="home">Home</string>
+        <string name="search">Search</string>
+        <string name="cart">Cart</string>
+        <string name="profile">Profile</string>
+        <string-array name="region_array">
+                <item>Quezon City</item>
+                <item>Makati</item>
+                <item>Manila</item>
+                <item>Pasig</item>
+                <item>Taguig</item>
+                <item>Marikina</item>
+                <item>San Juan</item>
+                <item>Muntinlupa</item>
+                <item>Pasay</item>
+        </string-array>
+
 </resources>

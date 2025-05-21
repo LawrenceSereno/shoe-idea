@@ -1,5 +1,6 @@
 package com.example.recycleviewtesting;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.recycleviewtesting.Adapter.BrandAdapter;
 import com.example.recycleviewtesting.Adapter.CategoryAdapter;
 import com.example.recycleviewtesting.Adapter.MyAdapter;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,45 +31,68 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
     private CategoryAdapter categoryAdapter;
 
     private List<Product> productList;
-    private List<Product> allProducts;  // For filtering
+    private List<Product> allProducts;
     private List<CategoryModel> categoryList;
-    private List<BrandModel> brandList; // Changed to BrandModel list
+    private List<BrandModel> brandList;
 
     private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main); // Your layout must have these RecyclerViews
+        setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.recyclerView);
         brandsRecyclerView = findViewById(R.id.brandsRecyclerView);
         categoriesRecyclerView = findViewById(R.id.categoriesRecyclerView);
 
-        // Setup products RecyclerView
+        // Setup product grid
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         productList = new ArrayList<>();
         allProducts = new ArrayList<>();
         adapter = new MyAdapter(productList, this);
         recyclerView.setAdapter(adapter);
 
-        // Setup brands RecyclerView
+        // Setup brand list
         brandsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         brandList = new ArrayList<>();
         brandAdapter = new BrandAdapter(brandList, this);
         brandsRecyclerView.setAdapter(brandAdapter);
         loadBrandsFromFirebase();
 
-        // Setup categories RecyclerView
+        // Setup categories
         categoriesRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         categoryList = getDummyCategories();
         categoryAdapter = new CategoryAdapter(categoryList, this);
         categoriesRecyclerView.setAdapter(categoryAdapter);
 
-        // Firebase reference for products
+        // Load products from Firebase
         mDatabase = FirebaseDatabase.getInstance().getReference("products");
-
         loadProducts();
+
+        // Setup bottom navigation
+        setupBottomNavigation();
+    }
+
+    private void setupBottomNavigation() {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        // Optional: set the default selected item
+        bottomNavigationView.setSelectedItemId(R.id.nav_home);
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+
+           if (itemId == R.id.nav_shop) {
+                startActivity(new Intent(MainActivity.this, Cart_Activity.class));
+                return true;
+            } else if (itemId == R.id.nav_profile) {
+                startActivity(new Intent(MainActivity.this, Profile.class));
+                return true;
+            } else {
+                return false;
+            }
+        });
     }
 
     private void loadProducts() {
@@ -122,10 +147,10 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
     private List<CategoryModel> getDummyCategories() {
         List<CategoryModel> list = new ArrayList<>();
         list.add(new CategoryModel("All"));
-        list.add(new CategoryModel("Sneakers"));
+        list.add(new CategoryModel("Air Jordan"));
+        list.add(new CategoryModel("Women's"));
+        list.add(new CategoryModel("Men's"));
         list.add(new CategoryModel("Running"));
-        list.add(new CategoryModel("Casual"));
-        list.add(new CategoryModel("Formal"));
         list.add(new CategoryModel("Sports"));
         return list;
     }

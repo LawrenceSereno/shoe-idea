@@ -1,74 +1,89 @@
 package com.example.recycleviewtesting;
 
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class AddAddressActivity extends AppCompatActivity {
 
-    private EditText nameInput, phoneInput, regionInput, streetInput, unitInput;
-    private Button saveAddressBtn;
-    private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
+    private EditText nameInput, phoneInput, streetInput, unitInput;
+    private Spinner regionSpinner;
+    private Button saveBtn;
+
+    private SharedPreferences sharedPreferences;
+
+    private static final String[] REGIONS = {"Region 1", "Region 2", "Region 3", "Region 4"};
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_address);
 
-        // Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        // Initialize views
         nameInput = findViewById(R.id.name_input);
         phoneInput = findViewById(R.id.phone_input);
-        regionInput = findViewById(R.id.region_input);
         streetInput = findViewById(R.id.street_input);
         unitInput = findViewById(R.id.unit_input);
-        saveAddressBtn = findViewById(R.id.save_btn);
+        regionSpinner = findViewById(R.id.region_spinner);
+        saveBtn = findViewById(R.id.save_btn);
 
-        // Set onClickListener for Save Address button
-        saveAddressBtn.setOnClickListener(v -> {
-            // Capture address details from the input fields
-            String name = nameInput.getText().toString().trim();
-            String phone = phoneInput.getText().toString().trim();
-            String region = regionInput.getText().toString().trim();
-            String street = streetInput.getText().toString().trim();
-            String unit = unitInput.getText().toString().trim();
+        sharedPreferences = getSharedPreferences("address_pref", MODE_PRIVATE);
 
-            // Basic validation (optional)
-            if (name.isEmpty() || phone.isEmpty() || region.isEmpty() || street.isEmpty()) {
-                Toast.makeText(AddAddressActivity.this, "Please fill in all required fields", Toast.LENGTH_SHORT).show();
-                return;
-            }
+        // Setup spinner
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, REGIONS);
+        regionSpinner.setAdapter(adapter);
 
-            // Create a new UserAddress object
-            UserAddress userAddress = new UserAddress(name, phone, region, street, unit);
+        loadExistingData();
 
-            // Save the address to Firebase under the user's unique ID
-            String userId = mAuth.getCurrentUser().getUid(); // Get current user ID
-            mDatabase.child("user_addresses").child(userId).setValue(userAddress)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(AddAddressActivity.this, "Address saved successfully", Toast.LENGTH_SHORT).show();
-                            // Proceed to Order Confirmation activity
-                            Intent intent = new Intent(AddAddressActivity.this, OrderConfirmationActivity.class);
-                            intent.putExtra("userAddress", userAddress);  // Pass the address data
-                            startActivity(intent);
-                        } else {
-                            Toast.makeText(AddAddressActivity.this, "Failed to save address", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        });
+        saveBtn.setOnClickListener(v -> saveAddress());
+    }
+
+    private void loadExistingData() {
+        String name = sharedPreferences.getString("name", "");
+        String phone = sharedPreferences.getString("phone", "");
+        String region = sharedPreferences.getString("region", "");
+        String street = sharedPreferences.getString("street", "");
+        String unit = sharedPreferences.getString("unit", "");
+
+        nameInput.setText(name);
+        phoneInput.setText(phone);
+        streetInput.setText(street);
+        unitInput.setText(unit);
+
+        if (!region.isEmpty()) {
+            int spinnerPosition = ((ArrayAdapter) regionSpinner.getAdapter()).getPosition(region);
+            regionSpinner.setSelection(spinnerPosition);
+        }
+    }
+
+    private void saveAddress() {
+        String name = nameInput.getText().toString().trim();
+        String phone = phoneInput.getText().toString().trim();
+        String region = regionSpinner.getSelectedItem().toString();
+        String street = streetInput.getText().toString().trim();
+        String unit = unitInput.getText().toString().trim();
+
+        if (name.isEmpty() || phone.isEmpty() || street.isEmpty()) {
+            Toast.makeText(this, "Please fill in all required fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("name", name);
+        editor.putString("phone", phone);
+        editor.putString("region", region);
+        editor.putString("street", street);
+        editor.putString("unit", unit);
+        editor.apply();
+
+        Toast.makeText(this, "Address saved!", Toast.LENGTH_SHORT).show();
+        finish();
     }
 }

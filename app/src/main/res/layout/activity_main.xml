@@ -46,63 +46,16 @@
         android:layout_gravity="center"
         android:visibility="gone" />
 
-    <LinearLayout
-        android:layout_width="383dp"
-        android:layout_height="52dp"
-        android:orientation="horizontal">
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@android:color/white"
+        app:menu="@menu/bottom_nav_menu"
+        app:itemIconTint="@color/nav_item_color"
+        app:itemTextColor="@color/nav_item_color"
+        app:labelVisibilityMode="unlabeled" />
 
-        <LinearLayout
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="40dp"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                app:srcCompat="@drawable/home" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                app:srcCompat="@drawable/search" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                app:srcCompat="@drawable/shopping" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/profile"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                app:srcCompat="@drawable/profile" />
-
-        </LinearLayout>
-    </LinearLayout>
 
 </LinearLayout>

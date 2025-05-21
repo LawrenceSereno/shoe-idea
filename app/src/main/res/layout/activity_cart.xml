@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="20dp"
     android:background="#ffffff">
 
     <!-- Toolbar -->
@@ -32,13 +33,53 @@
             android:textStyle="bold" />
     </RelativeLayout>
 
+    <!-- User Address Section -->
+    <LinearLayout
+        android:id="@+id/addressSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbarLayout"
+        android:layout_margin="12dp"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:background="#f0f0f0"
+        android:elevation="2dp">
+
+        <TextView
+            android:id="@+id/addressTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delivery Address"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/addressDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1234 Elm Street, Apt 5B, Springfield"
+            android:textColor="#444444"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp" />
+
+        <Button
+            android:id="@+id/editAddressButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit Address"
+            android:textColor="#000000"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_marginTop="8dp" />
+    </LinearLayout>
+
     <!-- RecyclerView for Cart Items -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cartRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottomLayout"
-        android:layout_below="@id/toolbarLayout"
+        android:layout_below="@id/addressSection"
         android:padding="8dp" />
 
     <!-- Empty Cart View -->
@@ -199,4 +240,5 @@
             android:textColor="#ffffff"
             android:textStyle="bold" />
     </LinearLayout>
+
 </RelativeLayout>

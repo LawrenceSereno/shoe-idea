@@ -1,5 +1,6 @@
 package com.example.recycleviewtesting.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,38 +13,31 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.recycleviewtesting.R;
 import com.example.recycleviewtesting.Item.CartItem;
+import com.example.recycleviewtesting.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.NumberFormat;
+import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
 
-    private Context context;
-    private List<CartItem> cartItems;
-    private OnCartItemChangeListener listener;
-
-    // Firebase references
-    private DatabaseReference cartRef;
-    private String userId;
+    private final Context context;
+    private final List<CartItem> cartItemList;
+    private final OnCartItemChangeListener cartChangeListener;
 
     public interface OnCartItemChangeListener {
         void onCartChanged();
     }
 
-    public CartAdapter(Context context, List<CartItem> cartItems, OnCartItemChangeListener listener) {
+    public CartAdapter(Context context, List<CartItem> cartItemList, OnCartItemChangeListener listener) {
         this.context = context;
-        this.cartItems = cartItems;
-        this.listener = listener;
-
-        // Initialize Firebase references
-        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        cartRef = FirebaseDatabase.getInstance().getReference("carts").child(userId);
+        this.cartItemList = cartItemList;
+        this.cartChangeListener = listener;
     }
 
     @NonNull
@@ -55,88 +49,141 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
-        CartItem item = cartItems.get(position);
+        CartItem item = cartItemList.get(position);
 
-        // Load product image
-        Glide.with(context)
-                .load(item.getImageUrl())
-                .into(holder.productImage);
-
-        // Set text fields
-        holder.productName.setText(item.getName());
-        holder.productSize.setText("Size: " + item.getSize());
-
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
-        holder.productPrice.setText(currencyFormat.format(item.getPrice()));
+        Glide.with(context).load(item.getImageUrl()).into(holder.imageView);
+        holder.nameTextView.setText(item.getName());
+        holder.sizeTextView.setText("Size: " + item.getSize());
         holder.quantityTextView.setText(String.valueOf(item.getQuantity()));
 
-        // Set click listeners
-        holder.decreaseQuantityButton.setOnClickListener(v -> {
-            if (item.getQuantity() > 1) {
-                updateItemQuantity(item, item.getQuantity() - 1);
+        Locale localePH = new Locale("en", "PH");
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(localePH);
+        currencyFormat.setCurrency(Currency.getInstance("PHP"));
+
+        double totalPrice = item.getPrice() * item.getQuantity();
+        holder.priceTextView.setText(currencyFormat.format(totalPrice));
+
+        // Disable subtract if quantity is 1
+        holder.subtractQuantityButton.setEnabled(item.getQuantity() > 1);
+
+        holder.addQuantityButton.setOnClickListener(v -> {
+            int newQuantity = item.getQuantity() + 1;
+            // updateItemQuantity(item, newQuantity); // 🔴 OLD
+            updateItemQuantity(item, newQuantity, holder.getAdapterPosition()); // ✅ NEW
+        });
+
+        holder.subtractQuantityButton.setOnClickListener(v -> {
+            int newQuantity = item.getQuantity() - 1;
+            if (newQuantity >= 1) {
+                // updateItemQuantity(item, newQuantity); // 🔴 OLD
+                updateItemQuantity(item, newQuantity, holder.getAdapterPosition()); // ✅ NEW
             }
         });
 
-        holder.increaseQuantityButton.setOnClickListener(v -> {
-            updateItemQuantity(item, item.getQuantity() + 1);
-        });
-
         holder.deleteButton.setOnClickListener(v -> {
-            removeItem(item);
+            new AlertDialog.Builder(context)
+                    .setTitle("Remove Item")
+                    .setMessage("Are you sure you want to remove this item from your cart?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        // deleteItem(item); // 🔴 OLD
+                        deleteItem(item, holder.getAdapterPosition()); // ✅ NEW
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
         });
+    }
+
+    // 🔴 OLD
+    /*
+    private void updateItemQuantity(CartItem item, int newQuantity) {
+        item.setQuantity(newQuantity);
+        notifyDataSetChanged();
+
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseDatabase.getInstance().getReference("carts")
+                .child(userId)
+                .child(item.getId())
+                .setValue(item);
+
+        if (cartChangeListener != null) cartChangeListener.onCartChanged();
+    }
+    */
+
+    // ✅ NEW
+    private void updateItemQuantity(CartItem item, int newQuantity, int position) {
+        item.setQuantity(newQuantity);
+        notifyItemChanged(position); // More efficient
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null) return;
+
+        FirebaseDatabase.getInstance().getReference("carts")
+                .child(currentUser.getUid())
+                .child(item.getId())
+                .setValue(item);
+
+        if (cartChangeListener != null) cartChangeListener.onCartChanged();
+    }
+
+    // 🔴 OLD
+    /*
+    private void deleteItem(CartItem item) {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseDatabase.getInstance().getReference("carts")
+                .child(userId)
+                .child(item.getId())
+                .removeValue();
+
+        cartItemList.remove(item);
+        notifyDataSetChanged();
+
+        if (cartChangeListener != null) cartChangeListener.onCartChanged();
+    }
+    */
+
+    // ✅ NEW
+    private void deleteItem(CartItem item, int position) {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null) return;
+
+        FirebaseDatabase.getInstance().getReference("carts")
+                .child(currentUser.getUid())
+                .child(item.getId())
+                .removeValue();
+
+        cartItemList.remove(position); // Safer and more accurate than remove(item)
+        notifyItemRemoved(position);
+
+        if (cartChangeListener != null) cartChangeListener.onCartChanged();
     }
 
     @Override
     public int getItemCount() {
-        return cartItems.size();
-    }
-
-    private void updateItemQuantity(CartItem item, int newQuantity) {
-        // Update in Firebase
-        DatabaseReference itemRef = cartRef.child(item.getId());
-        itemRef.child("quantity").setValue(newQuantity)
-                .addOnSuccessListener(aVoid -> {
-                    // Update local item
-                    item.setQuantity(newQuantity);
-                    notifyDataSetChanged();
-                    if (listener != null) {
-                        listener.onCartChanged();
-                    }
-                });
-    }
-
-    private void removeItem(CartItem item) {
-        // Remove from Firebase
-        DatabaseReference itemRef = cartRef.child(item.getId());
-        itemRef.removeValue()
-                .addOnSuccessListener(aVoid -> {
-                    // Remove from local list
-                    int position = cartItems.indexOf(item);
-                    if (position != -1) {
-                        cartItems.remove(position);
-                        notifyItemRemoved(position);
-                        if (listener != null) {
-                            listener.onCartChanged();
-                        }
-                    }
-                });
+        return cartItemList.size();
     }
 
     public static class CartViewHolder extends RecyclerView.ViewHolder {
-        ImageView productImage;
-        TextView productName, productSize, productPrice, quantityTextView;
-        ImageButton decreaseQuantityButton, increaseQuantityButton, deleteButton;
+
+        ImageView imageView;
+        TextView nameTextView, sizeTextView, priceTextView, quantityTextView;
+        ImageButton addQuantityButton, subtractQuantityButton, deleteButton;
 
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);
-            productImage = itemView.findViewById(R.id.productImage);
-            productName = itemView.findViewById(R.id.productName);
-            productSize = itemView.findViewById(R.id.productSize);
-            productPrice = itemView.findViewById(R.id.productPrice);
+            imageView = itemView.findViewById(R.id.productImage);
+            nameTextView = itemView.findViewById(R.id.productName);
+            sizeTextView = itemView.findViewById(R.id.productSize);
+            priceTextView = itemView.findViewById(R.id.productPrice);
             quantityTextView = itemView.findViewById(R.id.quantityTextView);
-            decreaseQuantityButton = itemView.findViewById(R.id.decreaseQuantityButton);
-            increaseQuantityButton = itemView.findViewById(R.id.increaseQuantityButton);
+            addQuantityButton = itemView.findViewById(R.id.increaseQuantityButton);
+            subtractQuantityButton = itemView.findViewById(R.id.decreaseQuantityButton);
             deleteButton = itemView.findViewById(R.id.deleteButton);
         }
+    }
+
+    public void updateList(List<CartItem> newList) {
+        cartItemList.clear();
+        cartItemList.addAll(newList);
+        notifyDataSetChanged();
     }
 }
