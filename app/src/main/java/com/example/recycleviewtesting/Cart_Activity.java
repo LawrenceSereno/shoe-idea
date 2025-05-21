@@ -32,7 +32,7 @@ public class Cart_Activity extends AppCompatActivity implements CartAdapter.OnCa
 
     private RecyclerView cartRecyclerView;
     private View emptyCartView;
-    private Button continueShoppingBtn, checkoutButton;
+    private Button continueShoppingBtn, checkoutButton,editAddressButton;
     private TextView subtotalTextView, deliveryFeeTextView, discountTextView, totalTextView;
 
     private List<CartItem> cartItems = new ArrayList<>();
@@ -67,6 +67,7 @@ public class Cart_Activity extends AppCompatActivity implements CartAdapter.OnCa
         // Back button and continue shopping just go back
         findViewById(R.id.backButton).setOnClickListener(v -> onBackPressed());
         continueShoppingBtn.setOnClickListener(v -> onBackPressed());
+
 
         // Checkout button logic with validation
         checkoutButton.setOnClickListener(v -> {

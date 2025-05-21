@@ -51,7 +51,7 @@
             android:name=".DetailActivity"
             android:exported="true" />
         <activity
-            android:name=".Intro"
+            android:name=".SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -68,6 +68,10 @@
         <activity
             android:name=".SignupActivity"
             android:exported="true" />
+
+        <activity android:name=".Intro"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>
