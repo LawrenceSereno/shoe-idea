@@ -12,8 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.recycleviewtesting.DetailActivity;
-import com.example.recycleviewtesting.Product;
+import com.example.recycleviewtesting.Activities.DetailActivity;
+import com.example.recycleviewtesting.Item.Product;
 import com.example.recycleviewtesting.R;
 
 import java.util.List;
@@ -41,29 +41,27 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         holder.titleText.setText(product.getName());
 
-        // Format price with comma for thousands and peso sign
         if (product.getPrice() != null) {
-            String priceFormatted = String.format("₱%,.0f", product.getPrice());  // No decimals, comma thousands
+            String priceFormatted = String.format("₱%,.0f", product.getPrice());
             holder.priceText.setText(priceFormatted);
         } else {
             holder.priceText.setText("Price N/A");
         }
 
-        holder.descriptionText.setText(product.getDescription() != null ? product.getDescription() : "No description");
+        // ❌ Removed description binding
+        // holder.descriptionText.setText(product.getDescription() != null ? product.getDescription() : "No description");
 
-        // Load image with Glide into the rotated ImageView
         Glide.with(context)
                 .load(product.getImageUrl())
-                .placeholder(R.drawable.check)  // Your placeholder image drawable
-                .error(R.drawable.close)        // Your error image drawable
+                .placeholder(R.drawable.check)
+                .error(R.drawable.close)
                 .into(holder.itemImage);
 
-        // Click on whole item to open DetailActivity with extras
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, DetailActivity.class);
             intent.putExtra("name", product.getName());
             intent.putExtra("price", product.getPrice());
-            intent.putExtra("description", product.getDescription());
+            intent.putExtra("description", product.getDescription()); // optional
             intent.putExtra("imageUrl", product.getImageUrl());
             context.startActivity(intent);
         });
@@ -75,16 +73,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView titleText, priceText, descriptionText;
+        TextView titleText, priceText;
         ImageView itemImage, arrowIcon;
 
         MyViewHolder(@NonNull View itemView) {
             super(itemView);
             titleText = itemView.findViewById(R.id.titleText);
             priceText = itemView.findViewById(R.id.priceText);
-            descriptionText = itemView.findViewById(R.id.productDescription);
+
+            // ❌ Commented out since it's removed from XML
+            // descriptionText = itemView.findViewById(R.id.productDescription);
+
             itemImage = itemView.findViewById(R.id.itemImage);
-            arrowIcon = itemView.findViewById(R.id.arrowIcon);  // You may not need to do anything with it
+            arrowIcon = itemView.findViewById(R.id.arrowIcon);
         }
     }
 }

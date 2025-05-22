@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="20dp"
-    android:background="#ffffff">
+    android:background="#ffffff"
+    android:foregroundGravity="center">
 
     <!-- Toolbar -->
     <RelativeLayout
@@ -85,7 +86,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="#ffffff"
-        android:elevation="8dp"
+        android:elevation="10dp"
         android:orientation="vertical"
         android:padding="16dp">
 

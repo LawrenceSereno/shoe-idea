@@ -60,15 +60,17 @@
                 android:layout_gravity="end"/>
         </LinearLayout>
 
-        <!-- Add the Description TextView below the price section -->
-        <TextView
-            android:id="@+id/productDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            android:text="This is the product description."
-            android:textColor="@color/black"
-            android:textSize="12sp" />
+
+        <!--
+    <TextView
+        android:id="@+id/productDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:text="This is the product description."
+        android:textColor="@color/black"
+        android:textSize="12sp" />
+    -->
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

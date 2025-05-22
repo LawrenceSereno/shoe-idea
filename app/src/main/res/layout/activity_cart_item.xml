@@ -18,8 +18,8 @@
                 android:id="@+id/productImage"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:scaleType="centerCrop"
-                android:contentDescription="Product image" />
+                android:contentDescription="Product image"
+                android:scaleType="centerInside" />
 
             <!-- Delete Button -->
             <ImageButton

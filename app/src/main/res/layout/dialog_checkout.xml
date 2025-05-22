@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/checkoutBottomSheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@android:color/white"
+    tools:context=".Activities.Cart_Activity"
+    android:layout_gravity="center">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/confirmTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirm Checkout"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="16dp" />
+
+    <!-- Confirm Name -->
+    <TextView
+        android:id="@+id/confirmNameText"
+        android:layout_width="363dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Shipping to: [Name]"
+        android:textColor="#333333"
+        android:textSize="16sp" />
+
+    <!-- Confirm Checkout Button -->
+    <Button
+        android:id="@+id/confirmCheckoutBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_button"
+        android:backgroundTint="#000000"
+        android:padding="12dp"
+        android:text="Confirm and Checkout"
+        android:textColor="#ffffff" />
+
+    <!-- Change Address Button -->
+    <Button
+        android:id="@+id/changeAddressBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Change Address"
+        android:textColor="#000000"
+        android:background="@android:color/transparent"
+        android:padding="12dp"
+        android:layout_marginTop="12dp" />
+
+</LinearLayout>

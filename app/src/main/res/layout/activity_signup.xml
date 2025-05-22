@@ -101,12 +101,13 @@
         <Button
             android:id="@+id/signupButton"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="45dp"
             android:layout_marginBottom="16dp"
+            android:background="@drawable/button_background"
             android:backgroundTint="@color/black"
             android:text="Sign Up"
             android:textColor="@android:color/white"
-            android:textColorHint="@color/black"/>
+            android:textColorHint="@color/black" />
 
         <LinearLayout
             android:layout_width="match_parent"

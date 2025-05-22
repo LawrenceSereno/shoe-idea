@@ -73,6 +73,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx:23.2.0") // Ensure Firebase is using the correct version
     implementation("com.google.android.gms:play-services-auth:20.2.0")
     implementation("de.hdodenhof:circleimageview:3.1.0")
+    implementation("com.cloudinary:cloudinary-android:3.0.2")
     implementation(libs.play.services.location)
     implementation(libs.firebase.crashlytics.buildtools)
 

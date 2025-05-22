@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:layout_marginBottom="8dp"
+    android:background="#f2f2f2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/purchaseDateText"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="#000"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/purchaseItemsText"
+        android:layout_marginTop="4dp"
+        android:textColor="#444"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

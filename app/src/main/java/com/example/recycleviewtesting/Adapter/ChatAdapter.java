@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.recycleviewtesting.ChatMessage;
+import com.example.recycleviewtesting.Item.ChatMessage;
 import com.example.recycleviewtesting.R;
 
 import java.text.SimpleDateFormat;

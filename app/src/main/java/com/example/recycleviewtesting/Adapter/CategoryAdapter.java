@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.example.recycleviewtesting.CategoryModel;
+import com.example.recycleviewtesting.Item.CategoryModel;
 import com.example.recycleviewtesting.R;
 
 import java.util.List;

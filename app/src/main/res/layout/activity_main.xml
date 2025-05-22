@@ -11,16 +11,19 @@
 
     <!-- Logout Button at the top -->
 
+    <SearchView
+        android:id="@+id/Search"
+        android:layout_width="391dp"
+        android:layout_height="wrap_content" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/brandsRecyclerView"
         android:layout_width="397dp"
         android:layout_height="152dp"
-        android:layout_marginTop="8dp"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
         tools:layout_marginTop="30dp" />
 
     <!-- Categories Horizontal RecyclerView -->
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/categoriesRecyclerView"
         android:layout_width="match_parent"
