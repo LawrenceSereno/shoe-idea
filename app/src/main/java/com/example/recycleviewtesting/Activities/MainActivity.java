@@ -2,6 +2,7 @@ package com.example.recycleviewtesting.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
 
     private DatabaseReference mDatabase;
 
+    private SearchView searchView; // 🔍 Added searchView reference
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
         recyclerView = findViewById(R.id.recyclerView);
         brandsRecyclerView = findViewById(R.id.brandsRecyclerView);
         categoriesRecyclerView = findViewById(R.id.categoriesRecyclerView);
+        searchView = findViewById(R.id.Search); // 🔍 Initializing the searchView
 
         // Setup product grid
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
@@ -74,20 +78,51 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
         mDatabase = FirebaseDatabase.getInstance().getReference("products");
         loadProducts();
 
+        // 🔍 Setup SearchView Listener
+        setupSearchView();
+
         // Setup bottom navigation
         setupBottomNavigation();
     }
 
+    private void setupSearchView() {
+        // 🔍 Filter products as the user types
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                filterProducts(query); // Search on submit
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterProducts(newText); // Live search as text changes
+                return true;
+            }
+        });
+    }
+
+    private void filterProducts(String text) {
+        // 🔍 Filter from in-memory list
+        List<Product> filteredList = new ArrayList<>();
+        for (Product product : allProducts) {
+            if (product.getName() != null && product.getName().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(product);
+            }
+        }
+        productList.clear();
+        productList.addAll(filteredList);
+        adapter.notifyDataSetChanged();
+    }
+
     private void setupBottomNavigation() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-
-        // Optional: set the default selected item
         bottomNavigationView.setSelectedItemId(R.id.nav_home);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
 
-           if (itemId == R.id.nav_shop) {
+            if (itemId == R.id.nav_shop) {
                 startActivity(new Intent(MainActivity.this, Cart_Activity.class));
                 return true;
             } else if (itemId == R.id.nav_profile) {

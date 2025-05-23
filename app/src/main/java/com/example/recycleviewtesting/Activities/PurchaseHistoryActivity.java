@@ -7,10 +7,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.recycleviewtesting.Item.Purchase;
 import com.example.recycleviewtesting.R;
+import com.example.recycleviewtesting.Item.Purchase; // ✅ Use your custom model
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.*;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 

@@ -4,26 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="50dp"
     android:background="@android:color/white"
+    android:gravity="center"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="8dp"
+    tools:context=".Activities.MainActivity">
 
-    <!-- Logout Button at the top -->
+    <!-- Search bar -->
 
+    <!-- Removed searchResultsList ListView -->
+    <!-- <ListView
+        android:id="@+id/searchResultsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginHorizontal="8dp" /> -->
+
+    <!-- Brands Horizontal RecyclerView -->
     <SearchView
         android:id="@+id/Search"
-        android:layout_width="391dp"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/brandsRecyclerView"
-        android:layout_width="397dp"
+        android:layout_width="match_parent"
         android:layout_height="152dp"
-        tools:layout_marginTop="30dp" />
+        android:layout_marginTop="8dp" />
 
     <!-- Categories Horizontal RecyclerView -->
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/categoriesRecyclerView"
         android:layout_width="match_parent"
@@ -37,11 +47,10 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="8dp"
         android:layout_weight="1" />
 
-    <!-- ProgressBar centered overlay -->
-
+    <!-- ProgressBar (Optional) -->
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="48dp"
@@ -49,16 +58,16 @@
         android:layout_gravity="center"
         android:visibility="gone" />
 
+    <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@android:color/white"
-        app:menu="@menu/bottom_nav_menu"
         app:itemIconTint="@color/nav_item_color"
         app:itemTextColor="@color/nav_item_color"
-        app:labelVisibilityMode="unlabeled" />
-
+        app:labelVisibilityMode="unlabeled"
+        app:menu="@menu/bottom_nav_menu" />
 
 </LinearLayout>

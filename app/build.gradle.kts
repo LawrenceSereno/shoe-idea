@@ -76,6 +76,7 @@ dependencies {
     implementation("com.cloudinary:cloudinary-android:3.0.2")
     implementation(libs.play.services.location)
     implementation(libs.firebase.crashlytics.buildtools)
+    implementation(libs.billing)
 
     // Unit tests
     testImplementation(libs.junit)

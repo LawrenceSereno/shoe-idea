@@ -133,7 +133,7 @@ public class ProfileChange extends AppCompatActivity {
 
         db.collection("users").document(uid).set(updates, SetOptions.merge())
                 .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(this, "Image URL saved to Firestore!", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, "Image URL saved to Firestore!", Toast.LENGTH_SHORT).show();
 
                     // (Optional) Also update Firebase Auth profile image
                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()

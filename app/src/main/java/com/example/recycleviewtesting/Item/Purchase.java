@@ -7,14 +7,23 @@ import java.util.Map;
 public class Purchase {
     private Date purchaseDate;
     private List<Map<String, Object>> items;
+    private String userId;
 
+    // 🔧 Required empty constructor for Firebase
     public Purchase() {
-        // Required empty constructor
     }
 
+    // 🔧 Existing constructor without userId
     public Purchase(Date purchaseDate, List<Map<String, Object>> items) {
         this.purchaseDate = purchaseDate;
         this.items = items;
+    }
+
+    // ✅ New constructor WITH userId
+    public Purchase(Date purchaseDate, List<Map<String, Object>> items, String userId) {
+        this.purchaseDate = purchaseDate;
+        this.items = items;
+        this.userId = userId;
     }
 
     public Date getPurchaseDate() {
@@ -31,5 +40,14 @@ public class Purchase {
 
     public void setItems(List<Map<String, Object>> items) {
         this.items = items;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    // ✅ Missing setter added
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

@@ -46,17 +46,17 @@ public class Intro extends AppCompatActivity {
         walkthroughItems = new ArrayList<>();
 
         walkthroughItems.add(new WalkthroughItem(
-                R.drawable.shoeagetstarted, // Replace with your shoe images
+                R.drawable.intro1, // Replace with your shoe images
                 "We provide high quality products just for you"
         ));
 
         walkthroughItems.add(new WalkthroughItem(
-                R.drawable.shoeagetstarted2,
+                R.drawable.intro2,
                 "Your satisfaction is our number one priority"
         ));
 
         walkthroughItems.add(new WalkthroughItem(
-                R.drawable.shoeagetstarted3,
+                R.drawable.intro3,
                 "Let's fulfill your fashion needs with Shoea right now!"
         ));
     }
